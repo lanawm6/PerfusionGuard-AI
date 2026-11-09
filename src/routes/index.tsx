@@ -1,23 +1,33 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { GiPanel, PageTitle, Panel, PatientHeader, RiskCard, TrendCharts, VitalsGrid } from "@/components/clinical/widgets";
+import { AlertsTable } from "@/components/clinical/AlertsTable";
+import { ScenarioPicker } from "@/components/clinical/ScenarioPicker";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "ICU Overview — PerfusionGuard AI" },
+      { name: "description", content: "Research prototype ICU dashboard with simulated septic shock patients, vital signs, trends and illustrative perfusion risk." },
+      { property: "og:title", content: "ICU Overview — PerfusionGuard AI" },
+      { property: "og:description", content: "Research prototype ICU monitoring dashboard using simulated data." },
+    ],
+  }),
+  component: Overview,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Overview() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="space-y-4">
+      <PageTitle title="Overview" subtitle="Bedside summary for the selected simulated patient" />
+      <ScenarioPicker />
+      <PatientHeader />
+      <VitalsGrid />
+      <div className="grid gap-4 xl:grid-cols-5">
+        <div className="xl:col-span-3"><RiskCard compact /></div>
+        <div className="xl:col-span-2"><GiPanel compact /></div>
+      </div>
+      <TrendCharts defaultRange={6} />
+      <Panel title="Recent alerts" action={<Link to="/alerts" className="text-xs font-medium text-primary hover:underline">View all</Link>}><AlertsTable limit={3} /></Panel>
     </div>
   );
 }
