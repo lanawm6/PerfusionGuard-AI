@@ -68,8 +68,8 @@ const VITALS: VitalDef[] = [
 function lastOf(samples: Sample[], key: Key, offset = 0) {
   let seen = 0;
   for (let i = samples.length - 1; i >= 0; i--) {
-    const v = samples[i][key];
-    if (v != null) { if (seen === offset) return { v: v as number, t: samples[i].t }; seen++; }
+    const v = samples[i]![key];
+    if (v != null) { if (seen === offset) return { v: v as number, t: samples[i]!.t }; seen++; }
   }
   return null;
 }
@@ -82,12 +82,12 @@ export function VitalsGrid() {
         const cur = lastOf(samples, def.key);
         // compare against value ~2 h earlier for sparse vars, 8 samples for continuous
         const sparse = def.key === "lactate" || def.key === "urine";
-        const prev = sparse ? lastOf(samples, def.key, def.key === "lactate" ? 1 : 2) : { v: samples[samples.length - 9][def.key] as number, t: 0 };
+        const prev = sparse ? lastOf(samples, def.key, def.key === "lactate" ? 1 : 2) : { v: samples[samples.length - 9]![def.key] as number, t: 0 };
         const delta = cur && prev ? cur.v - prev.v : 0;
         const eps = def.d === 0 ? 1.5 : def.d === 1 ? 0.15 : 0.005;
         const dir = Math.abs(delta) < eps ? 0 : delta > 0 ? 1 : -1;
         const concern = cur && def.concern?.(cur.v, scenario.weightKg);
-        const display = def.key === "sbp" ? `${fmtNum(cur?.v)}/${fmtNum(samples[samples.length - 1].dbp)}` : fmtNum(cur?.v, def.d);
+        const display = def.key === "sbp" ? `${fmtNum(cur?.v)}/${fmtNum(samples[samples.length - 1]!.dbp)}` : fmtNum(cur?.v, def.d);
         const TrendIcon = dir === 0 ? ArrowRight : dir > 0 ? ArrowUpRight : ArrowDownRight;
         return (
           <div key={def.key} className={cn("rounded-lg border bg-card p-3 shadow-panel", concern ? "border-risk-high/50" : "border-border")}>
@@ -192,7 +192,7 @@ export function TrendCharts({ defaultRange = 12 }: { defaultRange?: number }) {
       <div className="grid gap-4 lg:grid-cols-2">
         {SERIES.filter((s) => sel.includes(s.key)).map((s) => {
           const pts = data.map((d) => d[s.key]).filter((v): v is number => v != null);
-          const first = pts[0], lastV = pts[pts.length - 1];
+          const first = pts[0], lastV = pts[pts.length - 1] ?? 0;
           const rel = first ? (lastV - first) / Math.max(Math.abs(first), 0.01) : 0;
           const concerning = pts.length > 1 && ((s.worse === "down" && rel < -0.1) || (s.worse === "up" && rel > 0.15));
           const urineRef = s.key === "urine" ? 0.5 * scenario.weightKg : s.ref;

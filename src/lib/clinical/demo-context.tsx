@@ -40,13 +40,13 @@ function buildAlerts(sc: Scenario, samples: Sample[], gi: GiData, now: number): 
     const r = assessPerfusionRisk(samples, sc.weightKg, i);
     const rank = { LOW: 0, MODERATE: 1, HIGH: 2 };
     if (rank[r.level] > rank[prev]) {
-      const hourKey = Math.round(samples[i].t / 3600_000);
+      const hourKey = Math.round(samples[i]!.t / 3600_000);
       alerts.push({
         id: `${sc.id}-perf-${hourKey}`,
         type: "Perfusion",
         severity: r.level,
         patientId: sc.patientId,
-        t: samples[i].t,
+        t: samples[i]!.t,
         findings: r.contributors.map((c) => `${c.label} (${c.detail})`),
         recommendation: REASSESS,
       });
@@ -84,7 +84,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
     const risk = assessPerfusionRisk(samples, scenario.weightKg, samples.length - 1, extra);
     const alerts = buildAlerts(scenario, samples, gi, now).map((a) => ({ ...a, status: statuses[a.id] ?? ("Active" as AlertStatus) }));
     return {
-      scenario, step, samples, latest: samples[samples.length - 1], risk, gi, alerts, now,
+      scenario, step, samples, latest: samples[samples.length - 1]!, risk, gi, alerts, now,
       setScenario: (id) => { setScenarioId(id); setStep(0); },
       progress: () => setStep((s) => Math.min(s + 1, 12)),
       reset: () => { setStep(0); setStatuses({}); },

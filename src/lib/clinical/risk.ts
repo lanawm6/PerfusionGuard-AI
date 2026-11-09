@@ -55,7 +55,7 @@ export function assessPerfusionRisk(all: Sample[], weightKg: number, upTo = all.
     else if (lac.v >= THRESHOLDS.lactateElevated) contributors.push({ label: "Lactate elevated (≥ 2 mmol/L)", detail: `${lac.v.toFixed(1)} mmol/L`, points: 1 });
     if (lacPrev && lac.v - lacPrev.v >= THRESHOLDS.lactateRiseDelta)
       contributors.push({ label: "Rising lactate", detail: `+${(lac.v - lacPrev.v).toFixed(1)} mmol/L over ~6 h`, points: 1 });
-    const ageH = (now.t - s[lac.i].t) / 3600_000;
+    const ageH = (now.t - s[lac.i]!.t) / 3600_000;
     if (ageH >= THRESHOLDS.lactateStaleHours) warnings.push(`Most recent lactate is ${ageH.toFixed(1)} h old — interpretation limited.`);
   } else warnings.push("No lactate result available in the analysis window.");
 
