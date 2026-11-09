@@ -10,33 +10,128 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AlertsRouteImport } from './routes/alerts'
+import { Route as GastrointestinalRouteImport } from './routes/gastrointestinal'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as MonitoringRouteImport } from './routes/monitoring'
+import { Route as ResearchRouteImport } from './routes/research'
+import { Route as RiskRouteImport } from './routes/risk'
+import { Route as SettingsRouteImport } from './routes/settings'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AlertsRoute = AlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GastrointestinalRoute = GastrointestinalRouteImport.update({
+  id: '/gastrointestinal',
+  path: '/gastrointestinal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitoringRoute = MonitoringRouteImport.update({
+  id: '/monitoring',
+  path: '/monitoring',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResearchRoute = ResearchRouteImport.update({
+  id: '/research',
+  path: '/research',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RiskRoute = RiskRouteImport.update({
+  id: '/risk',
+  path: '/risk',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/gastrointestinal': typeof GastrointestinalRoute
+  '/history': typeof HistoryRoute
+  '/monitoring': typeof MonitoringRoute
+  '/research': typeof ResearchRoute
+  '/risk': typeof RiskRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/gastrointestinal': typeof GastrointestinalRoute
+  '/history': typeof HistoryRoute
+  '/monitoring': typeof MonitoringRoute
+  '/research': typeof ResearchRoute
+  '/risk': typeof RiskRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/alerts': typeof AlertsRoute
+  '/gastrointestinal': typeof GastrointestinalRoute
+  '/history': typeof HistoryRoute
+  '/monitoring': typeof MonitoringRoute
+  '/research': typeof ResearchRoute
+  '/risk': typeof RiskRoute
+  '/settings': typeof SettingsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/alerts'
+    | '/gastrointestinal'
+    | '/history'
+    | '/monitoring'
+    | '/research'
+    | '/risk'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/alerts'
+    | '/gastrointestinal'
+    | '/history'
+    | '/monitoring'
+    | '/research'
+    | '/risk'
+    | '/settings'
+  id:
+    | '__root__'
+    | '/'
+    | '/alerts'
+    | '/gastrointestinal'
+    | '/history'
+    | '/monitoring'
+    | '/research'
+    | '/risk'
+    | '/settings'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AlertsRoute: typeof AlertsRoute
+  GastrointestinalRoute: typeof GastrointestinalRoute
+  HistoryRoute: typeof HistoryRoute
+  MonitoringRoute: typeof MonitoringRoute
+  ResearchRoute: typeof ResearchRoute
+  RiskRoute: typeof RiskRoute
+  SettingsRoute: typeof SettingsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +143,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/alerts': {
+      id: '/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gastrointestinal': {
+      id: '/gastrointestinal'
+      path: '/gastrointestinal'
+      fullPath: '/gastrointestinal'
+      preLoaderRoute: typeof GastrointestinalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitoring': {
+      id: '/monitoring'
+      path: '/monitoring'
+      fullPath: '/monitoring'
+      preLoaderRoute: typeof MonitoringRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/research': {
+      id: '/research'
+      path: '/research'
+      fullPath: '/research'
+      preLoaderRoute: typeof ResearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/risk': {
+      id: '/risk'
+      path: '/risk'
+      fullPath: '/risk'
+      preLoaderRoute: typeof RiskRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AlertsRoute: AlertsRoute,
+  GastrointestinalRoute: GastrointestinalRoute,
+  HistoryRoute: HistoryRoute,
+  MonitoringRoute: MonitoringRoute,
+  ResearchRoute: ResearchRoute,
+  RiskRoute: RiskRoute,
+  SettingsRoute: SettingsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
