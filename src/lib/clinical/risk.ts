@@ -37,10 +37,10 @@ const avg = (xs: number[]) => xs.reduce((a, b) => a + b, 0) / Math.max(1, xs.len
 /** Assess using samples up to and including `upTo` (index). */
 export function assessPerfusionRisk(all: Sample[], weightKg: number, upTo = all.length - 1, extraWarnings: string[] = []): RiskAssessment {
   const s = all.slice(0, upTo + 1);
-  const now = s[s.length - 1];
+  const now = s[s.length - 1]!;
   const perHour = 4;
   const recent = s.slice(-perHour); // last hour
-  const sixAgo = s[Math.max(0, s.length - 1 - 6 * perHour)];
+  const sixAgo = s[Math.max(0, s.length - 1 - 6 * perHour)]!;
   const contributors: Contributor[] = [];
   const warnings: string[] = [...extraWarnings];
 
