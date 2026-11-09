@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import {
-  Activity, AlertTriangle, BarChart3, Bell, ClipboardList, Gauge, HeartPulse, History, LayoutDashboard, Menu, RotateCcw, Settings, ShieldAlert, SkipForward, Utensils, X,
+  Activity, BarChart3, Bell, Gauge, HeartPulse, History, LayoutDashboard, Menu, RotateCcw, Settings, ShieldAlert, SkipForward, Utensils, X,
 } from "lucide-react";
 import { useDemo } from "@/lib/clinical/demo-context";
 import { SCENARIOS, type ScenarioId } from "@/lib/clinical/data";
@@ -110,4 +110,3 @@ function Brand() {
   );
 }
 
-export { AlertTriangle, ClipboardList };
