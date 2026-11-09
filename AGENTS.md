@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Clinical risk logic lives in src/lib/clinical/risk.ts, separate from UI, so a validated model can replace the illustrative rules without UI changes.
+- Demo data is deterministic and generated in src/lib/clinical/data.ts; all derived state flows through DemoProvider so scenarios, charts, risk and alerts stay consistent.
